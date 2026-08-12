@@ -292,12 +292,14 @@ if(STANDALONE_BUILD)
       endif()
     else()
       # Try to use pkg config to look for the packages
-      find_package(PkgConfig REQUIRED)
-      pkg_check_modules(${_library_name} QUIET ${_library_name})
+      find_package(PkgConfig QUIET)
+      if(PKG_CONFIG_FOUND)
+        pkg_check_modules(${_library_name} QUIET ${_library_name})
+      endif()
       if (${${_library_name}_FOUND})
         list(APPEND REQ_STANDALONE_LIBS ${${_library_name}_LINK_LIBRARIES})
       else()
-        message(FATAL_ERROR "Could not find ${_library_name}")
+        message(FATAL_ERROR "Could not find ROS2 standalone library: ${_library_name}")
       endif()
     endif()
   endmacro()
@@ -374,8 +376,6 @@ if(STANDALONE_BUILD)
     rmw
     FastRTPS
     rmw_fastrtps_cpp
-    CycloneDDS
-    rmw_cyclonedds_cpp
     rmw_dds_common
     rmw_implementation
     rosidl_runtime_c
@@ -390,6 +390,9 @@ if(STANDALONE_BUILD)
     rosidl_dynamic_typesupport
     rosidl_dynamic_typesupport_fastrtps
   )
+  if (NOT ros2_distro STREQUAL "jazzy" AND NOT ros2_distro STREQUAL "rolling")
+    list(APPEND ros2_standalone_libs CycloneDDS rmw_cyclonedds_cpp)
+  endif()
   
   if(UNIX AND NOT ros2_distro STREQUAL "foxy")
     if(ros2_distro STREQUAL "galactic")
