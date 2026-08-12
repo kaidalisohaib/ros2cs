@@ -27,6 +27,7 @@ if($standalone) {
 }
 
 Write-Host $msg -ForegroundColor Green
-$cmake_args = " -DSTANDALONE_BUILD:int=$standalone_switch", " -DCMAKE_BUILD_TYPE=Release", " -DBUILD_TESTING:int=$tests_switch", " --no-warn-unused-cli"
+$python_exe = python -c "import sys; print(sys.executable)"
+$cmake_args = " -DSTANDALONE_BUILD:int=$standalone_switch", " -DCMAKE_BUILD_TYPE=Release", " -DBUILD_TESTING:int=$tests_switch", " -DPython3_EXECUTABLE=$python_exe", " --no-warn-unused-cli"
 colcon build --merge-install --event-handlers console_direct+ --cmake-args $cmake_args
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
