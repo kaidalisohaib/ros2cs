@@ -27,4 +27,6 @@ if($standalone) {
 }
 
 Write-Host $msg -ForegroundColor Green
-colcon build --merge-install --event-handlers console_direct+ --cmake-args -DSTANDALONE_BUILD:int=$standalone_switch -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:int=$tests_switch --no-warn-unused-cli
+$cmake_args = " -DSTANDALONE_BUILD:int=$standalone_switch", " -DCMAKE_BUILD_TYPE=Release", " -DBUILD_TESTING:int=$tests_switch", " --no-warn-unused-cli"
+colcon build --merge-install --event-handlers console_direct+ --cmake-args $cmake_args
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
