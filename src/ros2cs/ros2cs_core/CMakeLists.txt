@@ -237,6 +237,14 @@ if(STANDALONE_BUILD)
         endif()
       endif()
 
+      # Get tinyxml2 target lib
+      if(UNIX AND "${_library_name}" STREQUAL "tinyxml2")
+        find_library(TINYXML2_LIB_PATH tinyxml2)
+        if(TINYXML2_LIB_PATH)
+          list(APPEND REQ_STANDALONE_LIBS ${TINYXML2_LIB_PATH})
+        endif()
+      endif()
+
       # Get rmw_cyclonedds_cpp for humble
       if("${_library_name}" STREQUAL "rmw_cyclonedds_cpp" AND (ros2_distro STREQUAL "humble" OR ros2_distro STREQUAL "jazzy" OR ros2_distro STREQUAL "rolling"))
         fetch_target_lib(rmw_cyclonedds_cpp::rmw_cyclonedds_cpp)
