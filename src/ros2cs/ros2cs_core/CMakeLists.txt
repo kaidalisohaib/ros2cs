@@ -231,7 +231,7 @@ if(STANDALONE_BUILD)
         include(${${_library_name}_CONFIG})
         fetch_target_lib(spdlog::spdlog)
         list(APPEND REQ_STANDALONE_LIBS ${spdlog_spdlog_LIB_PATH})
-        if(ros2_distro STREQUAL "humble")
+        if(ros2_distro STREQUAL "humble" OR ros2_distro STREQUAL "jazzy" OR ros2_distro STREQUAL "rolling")
           fetch_target_lib(fmt::fmt)
           list(APPEND REQ_STANDALONE_LIBS ${fmt_fmt_LIB_PATH})
         endif()
@@ -379,6 +379,8 @@ if(STANDALONE_BUILD)
     tracetools
     yaml-cpp
     tinyxml2
+    rosidl_dynamic_typesupport
+    rosidl_dynamic_typesupport_fastrtps
   )
   
   if(UNIX AND NOT ros2_distro STREQUAL "foxy")

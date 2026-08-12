@@ -35,6 +35,11 @@ Supported ROS2 distributions:
 - _standalone_ (no ROS2 installation required on the target machine, e.g., your Unity3D simulation server). All required dependencies are installed and can be used e.g., as a complete set of Unity3D plugins.
 - _overlay_ (assuming existing (supported) ROS2 installation on the target machine). Only ros2cs libraries and generated messages are installed.
 
+> [!NOTE]
+> The `feature/jazzy-standalone` branch includes fixes for Jazzy standalone library bundling:
+> - `libfmt` is now bundled for Jazzy (previously bundled only for Humble).
+> - `rosidl_dynamic_typesupport` and `rosidl_dynamic_typesupport_fastrtps` libraries are now included in standalone builds.
+
 ## Building
 
 ### Generating custom messages
