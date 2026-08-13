@@ -163,10 +163,10 @@ if(STANDALONE_BUILD)
   macro(get_standalone_third_party_dependencies _library_name)
     find_file(${_library_name}_PATH "${_library_name}")
     if("${${_library_name}_PATH}" STREQUAL "${_library_name}_PATH-NOTFOUND")
-      message( FATAL_ERROR "Can't find third party dependency: ${_library_name}" )
+      message( WARNING "Can't find third party dependency: ${_library_name}" )
+    else()
+      list(APPEND REQ_THIRD_PARTY_STANDALONE_LIBS ${${_library_name}_PATH})
     endif()
-
-    list(APPEND REQ_THIRD_PARTY_STANDALONE_LIBS ${${_library_name}_PATH})
   endmacro()
 
   macro(install_standalone_third_party)
